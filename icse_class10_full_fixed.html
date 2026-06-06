@@ -1,0 +1,391 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Source+Sans+3:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:var(--color-background-tertiary);color:var(--color-text-primary)}
+.hero{background:linear-gradient(135deg,#042C53 0%,#185FA5 60%,#378ADD 100%);padding:1.8rem 1.2rem 1.4rem;text-align:center}
+.hero h1{font-family:'Playfair Display',serif;font-size:21px;color:#fff;font-weight:600;margin-bottom:4px}
+.hero p{font-size:11px;color:rgba(255,255,255,0.75);margin-bottom:0.8rem}
+.badge{display:inline-block;background:rgba(255,255,255,0.15);color:#fff;font-size:10px;padding:2px 8px;border-radius:20px;margin:0 2px}
+.ch-tabs{display:flex;gap:5px;justify-content:center;margin-top:0.7rem;flex-wrap:wrap}
+.ch-tab{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:5px 13px;border-radius:20px;font-size:12px;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:background 0.2s}
+.ch-tab:hover,.ch-tab.active{background:rgba(255,255,255,0.32)}
+.sub-nav{background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary);padding:0.5rem 1rem;display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.sub-btn{background:transparent;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);padding:3px 10px;border-radius:14px;font-size:11px;cursor:pointer;font-family:'Source Sans 3',sans-serif}
+.sub-btn:hover,.sub-btn.active{background:#E6F1FB;color:#185FA5;border-color:#B5D4F4}
+.container{max-width:680px;margin:0 auto;padding:0.9rem}
+.chapter{display:none}.chapter.active{display:block}
+.section{display:none}.section.active{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:11px;padding:1rem;margin-bottom:0.8rem}
+.card-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:0.6rem}
+.formula-box{background:var(--color-background-secondary);border-left:3px solid #378ADD;border-radius:0 7px 7px 0;padding:0.5rem 0.8rem;margin:0.4rem 0}
+.formula-box .label{font-size:10px;color:var(--color-text-secondary);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.4px}
+.formula-box .formula{font-weight:600;font-size:13px;color:#185FA5}
+.q-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;margin-bottom:0.65rem;overflow:hidden}
+.q-header{padding:0.7rem 0.9rem;display:flex;justify-content:space-between;align-items:flex-start;gap:7px;cursor:pointer;user-select:none}
+.q-num{background:#E6F1FB;color:#185FA5;font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;min-width:24px;text-align:center;flex-shrink:0;margin-top:1px}
+.q-text{font-size:12.5px;line-height:1.55;flex:1;color:var(--color-text-primary)}
+.q-toggle{color:#378ADD;font-size:14px;flex-shrink:0;margin-top:2px;transition:transform 0.2s}
+.q-solution{display:none;padding:0 0.9rem 0.8rem;border-top:0.5px solid var(--color-border-tertiary)}
+.q-solution.open{display:block}
+.sol-label{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.4px;margin:0.6rem 0 0.3rem}
+.sol-step{font-size:12.5px;line-height:1.85;color:var(--color-text-primary)}
+.sol-step b{color:#185FA5;font-weight:600}
+.sol-answer{background:#EAF3DE;border-radius:6px;padding:0.4rem 0.7rem;font-size:12.5px;font-weight:600;color:#3B6D11;margin-top:0.4rem;display:inline-block}
+.diff-badge{font-size:9px;padding:1px 5px;border-radius:9px;font-weight:600;margin-left:4px;white-space:nowrap}
+.easy{background:#EAF3DE;color:#3B6D11}.medium{background:#FAEEDA;color:#854F0B}.hard{background:#FCEBEB;color:#A32D2D}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0.8rem}
+.stat{background:var(--color-background-secondary);border-radius:7px;padding:0.6rem;text-align:center}
+.stat .n{font-size:18px;font-weight:600;color:#185FA5}.stat .l{font-size:10px;color:var(--color-text-secondary);margin-top:1px}
+.tip{background:#FAEEDA;border-radius:7px;padding:0.45rem 0.7rem;font-size:12px;color:#633806;margin:0.3rem 0}
+hr{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:0.6rem 0}
+.filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:0.65rem}
+.filter-btn{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);padding:3px 10px;border-radius:14px;font-size:11px;cursor:pointer;font-family:'Source Sans 3',sans-serif}
+.filter-btn.active{background:#E6F1FB;color:#185FA5;border-color:#B5D4F4}
+.ch-badge{display:inline-block;background:#E6F1FB;color:#185FA5;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;margin-bottom:0.5rem}
+</style>
+
+<div class="hero">
+  <h1>ICSE Class 10 Mathematics</h1>
+  <p>ML Aggarwal Solutions — Chapter 1, 2 &amp; 3</p>
+  <div><span class="badge">GST</span><span class="badge">Banking</span><span class="badge">Shares &amp; Dividend</span></div>
+  <div class="ch-tabs">
+    <button class="ch-tab active" onclick="showCh('ch1',this)">Ch-1: GST</button>
+    <button class="ch-tab" onclick="showCh('ch2',this)">Ch-2: Banking</button>
+    <button class="ch-tab" onclick="showCh('ch3',this)">Ch-3: Shares &amp; Dividend</button>
+  </div>
+</div>
+
+<!-- SUB NAVS -->
+<div class="sub-nav" id="sub-ch1">
+  <button class="sub-btn active" onclick="showSec('ch1','c1home',this)">Home</button>
+  <button class="sub-btn" onclick="showSec('ch1','c1form',this)">Formulas</button>
+  <button class="sub-btn" onclick="showSec('ch1','c1q',this)">18 Questions</button>
+  <button class="sub-btn" onclick="showSec('ch1','c1tips',this)">Exam Tips</button>
+</div>
+<div class="sub-nav" id="sub-ch2" style="display:none">
+  <button class="sub-btn active" onclick="showSec('ch2','c2home',this)">Home</button>
+  <button class="sub-btn" onclick="showSec('ch2','c2form',this)">Formulas</button>
+  <button class="sub-btn" onclick="showSec('ch2','c2q',this)">12 Questions</button>
+  <button class="sub-btn" onclick="showSec('ch2','c2tips',this)">Exam Tips</button>
+</div>
+<div class="sub-nav" id="sub-ch3" style="display:none">
+  <button class="sub-btn active" onclick="showSec('ch3','c3home',this)">Home</button>
+  <button class="sub-btn" onclick="showSec('ch3','c3form',this)">Formulas</button>
+  <button class="sub-btn" onclick="showSec('ch3','c3q',this)">32 Questions</button>
+  <button class="sub-btn" onclick="showSec('ch3','c3tips',this)">Exam Tips</button>
+</div>
+
+<div class="container">
+
+<!-- ============ CH1: GST ============ -->
+<div id="ch1" class="chapter active">
+  <div id="c1home" class="section active">
+    <div class="ch-badge">Chapter 1 — GST</div>
+    <div class="grid2">
+      <div class="stat"><div class="n">18</div><div class="l">Questions</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Solutions</div></div>
+      <div class="stat"><div class="n">CGST</div><div class="l">Intra-state</div></div>
+      <div class="stat"><div class="n">IGST</div><div class="l">Inter-state</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Key Concepts</div>
+      <div class="formula-box"><div class="label">Intra-state</div><div class="formula">GST = CGST + SGST (each = GST/2)</div></div>
+      <div class="formula-box"><div class="label">Inter-state</div><div class="formula">GST = IGST only</div></div>
+      <div class="formula-box"><div class="label">Tax Liability</div><div class="formula">= Output Tax − Input Tax</div></div>
+      <div class="formula-box"><div class="label">Consumer pays</div><div class="formula">= SP + CGST + SGST (or IGST)</div></div>
+    </div>
+  </div>
+  <div id="c1form" class="section">
+    <div class="card">
+      <div class="card-title">GST Formulas</div>
+      <div class="formula-box"><div class="label">CGST = SGST</div><div class="formula">= (GST Rate / 2) % of SP</div></div>
+      <div class="formula-box"><div class="label">IGST</div><div class="formula">= GST Rate % of SP</div></div>
+      <div class="formula-box"><div class="label">Net Tax to Govt</div><div class="formula">= Output Tax − Input Tax</div></div>
+      <div class="formula-box"><div class="label">SP with profit</div><div class="formula">= CP × (1 + Profit%/100)</div></div>
+      <div class="formula-box"><div class="label">SP with discount</div><div class="formula">= MP × (1 − Discount%/100)</div></div>
+    </div>
+  </div>
+  <div id="c1q" class="section">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filt('g','all',this)">All (18)</button>
+      <button class="filter-btn" onclick="filt('g','easy',this)">Easy</button>
+      <button class="filter-btn" onclick="filt('g','medium',this)">Medium</button>
+      <button class="filter-btn" onclick="filt('g','hard',this)">Hard</button>
+    </div>
+    <div id="g-list">
+
+<div class="q-card" data-g="g" data-d="easy"><div class="q-header" onclick="tog('gs1','gi1')"><span class="q-num">Q1</span><span class="q-text">Article marked ₹15000, sold at 10% profit. GST 12%. Find (i) SP (ii) GST paid by consumer (iii) total paid.<span class="diff-badge easy">Easy</span></span><i id="gi1" class="ti ti-chevron-down q-toggle"></i></div><div id="gs1" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) SP = 15000+1500 = <b>₹16500</b></div><div class="sol-step">(ii) GST = 12% of 16500 = <b>₹1980</b></div><div class="sol-step">(iii) Total = 16500+1980 = <b>₹18480</b></div><div class="sol-answer">₹16500 | ₹1980 | ₹18480</div></div></div>
+
+<div class="q-card" data-g="g" data-d="easy"><div class="q-header" onclick="tog('gs2','gi2')"><span class="q-num">Q2</span><span class="q-text">Shopkeeper buys goods ₹4000, sells at 20% profit. GST 5%, intra-state. Find (i) SP (ii) CGST (iii) SGST (iv) total.<span class="diff-badge easy">Easy</span></span><i id="gi2" class="ti ti-chevron-down q-toggle"></i></div><div id="gs2" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) SP = <b>₹4800</b> | (ii) CGST = <b>₹120</b> | (iii) SGST = <b>₹120</b> | (iv) Total = <b>₹5040</b></div><div class="sol-answer">₹4800 | ₹120 | ₹120 | ₹5040</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs3','gi3')"><span class="q-num">Q3</span><span class="q-text">MP ₹12500, dealer sells at 8% profit, same city. GST 18%. Find (i) SP (ii) CGST &amp; SGST (iii) total consumer pays.<span class="diff-badge medium">Medium</span></span><i id="gi3" class="ti ti-chevron-down q-toggle"></i></div><div id="gs3" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) SP = <b>₹13500</b> | (ii) CGST = SGST = 9% of 13500 = <b>₹1215 each</b> | (iii) Total = <b>₹15930</b></div><div class="sol-answer">₹13500 | ₹1215 each | ₹15930</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs4','gi4')"><span class="q-num">Q4</span><span class="q-text">Shopkeeper buys ₹20000, sells at 10% profit. GST 12%. Find tax liability.<span class="diff-badge medium">Medium</span></span><i id="gi4" class="ti ti-chevron-down q-toggle"></i></div><div id="gs4" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">SP=22000 | Output tax=₹2200 | Input tax=₹2000 | Liability = <b>₹200</b></div><div class="sol-answer">₹200</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs5','gi5')"><span class="q-num">Q5</span><span class="q-text">Dealer buys ₹6000, sells at 15% profit. GST 18%, intra-state. Find (i) input CGST/SGST (ii) output CGST/SGST (iii) net CGST/SGST (iv) consumer total.<span class="diff-badge medium">Medium</span></span><i id="gi5" class="ti ti-chevron-down q-toggle"></i></div><div id="gs5" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) ₹540 each | (ii) SP=6900 → ₹621 each | (iii) Net = <b>₹81 each</b> | (iv) <b>₹8142</b></div><div class="sol-answer">Input ₹540 | Output ₹621 | Net ₹81 | Consumer ₹8142</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs6','gi6')"><span class="q-num">Q6</span><span class="q-text">Manufacturer buys raw material ₹7500 at GST 5%, sells at 40% profit. GST 12%, intra-state. Find (i) input tax (ii) output tax (iii) net tax (iv) dealer pays.<span class="diff-badge medium">Medium</span></span><i id="gi6" class="ti ti-chevron-down q-toggle"></i></div><div id="gs6" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">SP=10500 | (i) ₹187.50 each | (ii) ₹630 each | (iii) <b>₹442.50 each</b> | (iv) <b>₹11760</b></div><div class="sol-answer">Net CGST/SGST ₹442.50 | Dealer ₹11760</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs7','gi7')"><span class="q-num">Q7</span><span class="q-text">Manufacturer sells TV ₹18000 to dealer. Dealer sells at ₹1500 profit. Intra-state, GST 12%. Find (i) dealer pays to state (ii) central gets (iii) state gets (iv) consumer pays.<span class="diff-badge medium">Medium</span></span><i id="gi7" class="ti ti-chevron-down q-toggle"></i></div><div id="gs7" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Mfr→Dealer: CGST=SGST=₹1080 | Dealer SP=19500 → CGST=SGST=₹1170</div><div class="sol-step">(i) ₹90 | (ii) <b>₹1170</b> | (iii) <b>₹1170</b> | (iv) <b>₹21840</b></div><div class="sol-answer">Dealer ₹90 | Govts ₹1170 each | Consumer ₹21840</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs8','gi8')"><span class="q-num">Q8</span><span class="q-text">Camera MP ₹1600, shopkeeper buys at 20% discount, sells at MP. GST 12%, intra-state. Find (i) shopkeeper's net CGST (ii) central total (iii) state total (iv) consumer pays.<span class="diff-badge medium">Medium</span></span><i id="gi8" class="ti ti-chevron-down q-toggle"></i></div><div id="gs8" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">CP=1280, Input CGST=₹76.80 | SP=1600, Output CGST=₹96</div><div class="sol-step">(i) <b>₹19.20</b> | (ii) <b>₹96</b> | (iii) <b>₹96</b> | (iv) <b>₹1792</b></div><div class="sol-answer">Net ₹19.20 | Govts ₹96 each | Consumer ₹1792</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs9','gi9')"><span class="q-num">Q9</span><span class="q-text">Dealer buys at 30% discount on MP ₹6000. Sells to consumer at 10% discount. GST 5%, intra-state. Find (i) consumer pays (ii) dealer's net SGST (iii) central total.<span class="diff-badge medium">Medium</span></span><i id="gi9" class="ti ti-chevron-down q-toggle"></i></div><div id="gs9" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Dealer CP=4200, Input SGST=₹105 | Consumer SP=5400, Output SGST=₹135</div><div class="sol-step">(i) <b>₹5670</b> | (ii) <b>₹30</b> | (iii) <b>₹135</b></div><div class="sol-answer">Consumer ₹5670 | SGST ₹30 | Central ₹135</div></div></div>
+
+<div class="q-card" data-g="g" data-d="hard"><div class="q-header" onclick="tog('gs10','gi10')"><span class="q-num">Q10</span><span class="q-text">MP ₹50000. Wholesaler gives 10% discount to shopkeeper. Shopkeeper sells 4% above MP. GST 18%, intra-state. Find (i) shopkeeper pays (ii) consumer pays (iii) net CGST (iv) state total.<span class="diff-badge hard">Hard</span></span><i id="gi10" class="ti ti-chevron-down q-toggle"></i></div><div id="gs10" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Shopkeeper CP=45000, CGST=SGST=₹4050 | (i) <b>₹53100</b></div><div class="sol-step">Consumer SP=52000, CGST=SGST=₹4680 | (ii) <b>₹61360</b></div><div class="sol-step">(iii) Net CGST = 4680−4050 = <b>₹630</b> | (iv) State = <b>₹4680</b></div><div class="sol-answer">₹53100 | ₹61360 | ₹630 | ₹4680</div></div></div>
+
+<div class="q-card" data-g="g" data-d="hard"><div class="q-header" onclick="tog('gs11','gi11')"><span class="q-num">Q11</span><span class="q-text">Retailer buys TV ₹40000, marks 15% above CP, gives 5% discount. GST 12%, intra-state. Find (i) MP (ii) consumer pays (iii) retailer CGST to central (iv) state total.<span class="diff-badge hard">Hard</span></span><i id="gi11" class="ti ti-chevron-down q-toggle"></i></div><div id="gs11" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) MP = <b>₹46000</b> | SP = 43700 | (ii) Consumer = <b>₹48944</b></div><div class="sol-step">(iii) Net CGST = 2622−2400 = <b>₹222</b> | (iv) State = <b>₹2622</b></div><div class="sol-answer">₹46000 | ₹48944 | ₹222 | ₹2622</div></div></div>
+
+<div class="q-card" data-g="g" data-d="hard"><div class="q-header" onclick="tog('gs12','gi12')"><span class="q-num">Q12</span><span class="q-text">Shopkeeper buys ₹12000, marks up 25%. Gives 10% then 5% off-season discount. GST 12%, intra-state. Find (i) consumer total (ii) SGST to state (iii) central total.<span class="diff-badge hard">Hard</span></span><i id="gi12" class="ti ti-chevron-down q-toggle"></i></div><div id="gs12" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">MP=15000 → 13500 → 12825 | (i) 12825+1539 = <b>₹14364</b></div><div class="sol-step">(ii) SGST = 769.50−720 = <b>₹49.50</b> | (iii) Central = <b>₹769.50</b></div><div class="sol-answer">₹14364 | ₹49.50 | ₹769.50</div></div></div>
+
+<div class="q-card" data-g="g" data-d="hard"><div class="q-header" onclick="tog('gs13','gi13')"><span class="q-num">Q13</span><span class="q-text">MP ₹40000. UP wholesaler buys from Gujarat at 10% discount, sells to HP retailer at 5% above MP. GST 18%, inter-state both. Find (i) wholesaler pays (ii) retailer pays (iii) wholesaler net GST (iv) central total.<span class="diff-badge hard">Hard</span></span><i id="gi13" class="ti ti-chevron-down q-toggle"></i></div><div id="gs13" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Wholesaler CP=36000, IGST=6480 | (i) <b>₹42480</b></div><div class="sol-step">Retailer CP=42000, IGST=7560 | (ii) <b>₹49560</b></div><div class="sol-step">(iii) Net = 7560−6480 = <b>₹1080</b> | (iv) Central = <b>₹7560</b></div><div class="sol-answer">₹42480 | ₹49560 | ₹1080 | ₹7560</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs14','gi14')"><span class="q-num">Q14</span><span class="q-text">Delhi dealer buys ₹16000 from Delhi wholesaler, sells to Rajasthan at 25% profit. GST 5%. Find (i) wholesaler tax (ii) dealer tax (iii) consumer pays.<span class="diff-badge medium">Medium</span></span><i id="gi14" class="ti ti-chevron-down q-toggle"></i></div><div id="gs14" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">SP=20000 | (i) CGST=SGST=₹100 each | (ii) IGST=<b>₹200</b> to central | (iii) <b>₹21000</b></div><div class="sol-answer">₹100 each CGST/SGST | ₹200 IGST | ₹21000</div></div></div>
+
+<div class="q-card" data-g="g" data-d="hard"><div class="q-header" onclick="tog('gs15','gi15')"><span class="q-num">Q15</span><span class="q-text">Delhi shopkeeper buys from Mumbai for ₹24000, sells in Delhi at 15% profit. GST 12%. Find (i) shopkeeper pays (ii) consumer pays (iii) Delhi state gets (iv) central gets.<span class="diff-badge hard">Hard</span></span><i id="gi15" class="ti ti-chevron-down q-toggle"></i></div><div id="gs15" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">IGST paid=₹2880 | (i) <b>₹26880</b> | SP=27600 | (ii) <b>₹30912</b></div><div class="sol-step">(iii) State Delhi = <b>₹432</b> | (iv) Central = <b>₹2880</b></div><div class="sol-answer">₹26880 | ₹30912 | State ₹432 | Central ₹2880</div></div></div>
+
+<div class="q-card" data-g="g" data-d="hard"><div class="q-header" onclick="tog('gs16','gi16')"><span class="q-num">Q16</span><span class="q-text">Maharashtra dealer buys from Maharashtra wholesaler at 25% discount on MP ₹20000, sells to Telangana at 10% discount on MP. GST 12%. Find (i) wholesaler tax (ii) dealer tax (iii) consumer pays.<span class="diff-badge hard">Hard</span></span><i id="gi16" class="ti ti-chevron-down q-toggle"></i></div><div id="gs16" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Dealer CP=15000 | (i) CGST=SGST=<b>₹900 each</b> to Maharashtra</div><div class="sol-step">Dealer SP=18000 (inter-state) | (ii) IGST = 2160−1800 = <b>₹360</b> | (iii) <b>₹20160</b></div><div class="sol-answer">₹900 each CGST/SGST | ₹360 IGST | ₹20160</div></div></div>
+
+<div class="q-card" data-g="g" data-d="medium"><div class="q-header" onclick="tog('gs17','gi17')"><span class="q-num">Q17</span><span class="q-text">Article bought for ₹5310 including 10% rebate on MP and 18% GST. Find marked price.<span class="diff-badge medium">Medium</span></span><i id="gi17" class="ti ti-chevron-down q-toggle"></i></div><div id="gs17" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Let MP=x | 9x/10 × 118/100 = 5310 | x = 5310×100/118×10/9 = <b>₹5000</b></div><div class="sol-answer">₹5000</div></div></div>
+
+<div class="q-card" data-g="g" data-d="hard"><div class="q-header" onclick="tog('gs18','gi18')"><span class="q-num">Q18</span><span class="q-text">List price ₹8000. Shopkeeper buys at x% discount, sells at list price. GST 18%, intra-state. Shopkeeper pays ₹72 SGST. Find discount rate.<span class="diff-badge hard">Hard</span></span><i id="gi18" class="ti ti-chevron-down q-toggle"></i></div><div id="gs18" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Output SGST=₹720 | 720−9(8000−80x)/100=72 | 100−x=90 | x=<b>10%</b></div><div class="sol-answer">Discount = 10%</div></div></div>
+
+    </div>
+  </div>
+  <div id="c1tips" class="section">
+    <div class="card">
+      <div class="card-title">GST Exam Tips</div>
+      <div class="tip">⚠️ First decide: Intra-state = CGST+SGST. Inter-state = IGST only.</div>
+      <div class="tip">⚠️ Tax Liability = Output Tax − Input Tax.</div>
+      <div class="tip">✅ Consumer always pays full output GST — no credit for them.</div>
+      <div class="tip">✅ Central Govt gets all CGST (intra) or IGST (inter) in chain.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CH2: BANKING ============ -->
+<div id="ch2" class="chapter">
+  <div id="c2home" class="section active">
+    <div class="ch-badge">Chapter 2 — Banking (RD Account)</div>
+    <div class="grid2">
+      <div class="stat"><div class="n">12</div><div class="l">Questions</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Solutions</div></div>
+      <div class="stat"><div class="n">RD</div><div class="l">Recurring Deposit</div></div>
+      <div class="stat"><div class="n">SI</div><div class="l">Simple Interest</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Key Formulas</div>
+      <div class="formula-box"><div class="label">Interest</div><div class="formula">I = P × [n(n+1)/(2×12)] × r/100</div></div>
+      <div class="formula-box"><div class="label">Maturity Value</div><div class="formula">MV = P × n + I</div></div>
+    </div>
+  </div>
+  <div id="c2form" class="section">
+    <div class="card">
+      <div class="card-title">Banking Formulas</div>
+      <div class="formula-box"><div class="label">Interest on RD</div><div class="formula">I = P × [n(n+1)/(2×12)] × r/100</div></div>
+      <div class="formula-box"><div class="label">Maturity Value</div><div class="formula">MV = (P × n) + I</div></div>
+      <div class="formula-box"><div class="label">Find Rate r</div><div class="formula">r = (I × 100 × 12) ÷ [P × n(n+1)/2]</div></div>
+      <div class="formula-box"><div class="label">Find Monthly P</div><div class="formula">Equate P×n + I = MV, solve for P</div></div>
+      <div class="formula-box"><div class="label">Find Period n</div><div class="formula">Form quadratic in n, reject negative root</div></div>
+    </div>
+  </div>
+  <div id="c2q" class="section">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filt('b','all',this)">All (12)</button>
+      <button class="filter-btn" onclick="filt('b','easy',this)">Easy</button>
+      <button class="filter-btn" onclick="filt('b','medium',this)">Medium</button>
+      <button class="filter-btn" onclick="filt('b','hard',this)">Hard</button>
+    </div>
+    <div id="b-list">
+
+<div class="q-card" data-g="b" data-d="easy"><div class="q-header" onclick="tog('bs1','bi1')"><span class="q-num">Q1</span><span class="q-text">Mrs. Goswami deposits ₹1000/month for 3 years at 8% p.a. Find maturity value.<span class="diff-badge easy">Easy</span></span><i id="bi1" class="ti ti-chevron-down q-toggle"></i></div><div id="bs1" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">P=1000, n=36, r=8% | P_eff = 1000×(36×37)/2 = ₹6,66,000</div><div class="sol-step">I = (6,66,000×8)/(100×12) = ₹4440 | MV = 36000+4440 = <b>₹40,440</b></div><div class="sol-answer">₹40,440</div></div></div>
+
+<div class="q-card" data-g="b" data-d="easy"><div class="q-header" onclick="tog('bs2','bi2')"><span class="q-num">Q2</span><span class="q-text">Sonia deposits ₹600/month for 2½ years at 10% p.a. Find maturity value.<span class="diff-badge easy">Easy</span></span><i id="bi2" class="ti ti-chevron-down q-toggle"></i></div><div id="bs2" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">n=30 | I = 600×(30×31/24)×10/100 = <b>₹2325</b> | MV = 18000+2325 = <b>₹20,325</b></div><div class="sol-answer">₹20,325</div></div></div>
+
+<div class="q-card" data-g="b" data-d="easy"><div class="q-header" onclick="tog('bs3','bi3')"><span class="q-num">Q3</span><span class="q-text">Kiran deposits ₹200/month for 36 months at 11% p.a. Find maturity value.<span class="diff-badge easy">Easy</span></span><i id="bi3" class="ti ti-chevron-down q-toggle"></i></div><div id="bs3" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">P_eff = 200×(36×37)/2 = ₹1,33,200 | I = (1,33,200×11)/(100×12) = <b>₹1221</b> | MV = 7200+1221 = <b>₹8421</b></div><div class="sol-answer">₹8421</div></div></div>
+
+<div class="q-card" data-g="b" data-d="medium"><div class="q-header" onclick="tog('bs4','bi4')"><span class="q-num">Q4</span><span class="q-text">Haneef deposits ₹600/month for 4 years, gets ₹5880 interest. Find rate of interest.<span class="diff-badge medium">Medium</span></span><i id="bi4" class="ti ti-chevron-down q-toggle"></i></div><div id="bs4" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">n=48 | P_eff = ₹7,05,600 | 5880 = 588r → r = <b>10% p.a.</b></div><div class="sol-answer">10% p.a.</div></div></div>
+
+<div class="q-card" data-g="b" data-d="medium"><div class="q-header" onclick="tog('bs5','bi5')"><span class="q-num">Q5</span><span class="q-text">David deposits ₹300/month for 2 years, gets ₹7725. Find rate of interest.<span class="diff-badge medium">Medium</span></span><i id="bi5" class="ti ti-chevron-down q-toggle"></i></div><div id="bs5" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">n=24 | P_eff=₹90,000 | I=525 | 75R=525 → R = <b>7% p.a.</b></div><div class="sol-answer">7% p.a.</div></div></div>
+
+<div class="q-card" data-g="b" data-d="medium"><div class="q-header" onclick="tog('bs6','bi6')"><span class="q-num">Q6</span><span class="q-text">Mr. Gupta deposits ₹2500/month for 2 years, gets ₹67500. Find (i) total interest (ii) rate of interest.<span class="diff-badge medium">Medium</span></span><i id="bi6" class="ti ti-chevron-down q-toggle"></i></div><div id="bs6" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) I = 67500−60000 = <b>₹7500</b> | P_eff=₹7,50,000 | (ii) r = (7500×1200)÷750000 = <b>12%</b></div><div class="sol-answer">₹7500 | 12%</div></div></div>
+
+<div class="q-card" data-g="b" data-d="medium"><div class="q-header" onclick="tog('bs7','bi7')"><span class="q-num">Q7</span><span class="q-text">Shahrukh deposits ₹800/month for 1½ years, gets ₹15084. Find rate of interest.<span class="diff-badge medium">Medium</span></span><i id="bi7" class="ti ti-chevron-down q-toggle"></i></div><div id="bs7" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">n=18 | P_eff=₹1,36,800 | I=684 | 114r=684 → r = <b>6% p.a.</b></div><div class="sol-answer">6% p.a.</div></div></div>
+
+<div class="q-card" data-g="b" data-d="medium"><div class="q-header" onclick="tog('bs9','bi9')"><span class="q-num">Q9</span><span class="q-text">Rekha opens RD for 20 months at 9% p.a., receives ₹441 interest. Find monthly deposit.<span class="diff-badge medium">Medium</span></span><i id="bi9" class="ti ti-chevron-down q-toggle"></i></div><div id="bs9" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">441 = x×(20×21/24)×9/100 | x = (441×100×24)÷(20×21×9) = <b>₹280</b></div><div class="sol-answer">₹280/month</div></div></div>
+
+<div class="q-card" data-g="b" data-d="medium"><div class="q-header" onclick="tog('bs10','bi10')"><span class="q-num">Q10</span><span class="q-text">Mohan has RD for 2 years at 6% p.a., gets ₹1200 interest. Find (i) monthly instalment (ii) maturity value.<span class="diff-badge medium">Medium</span></span><i id="bi10" class="ti ti-chevron-down q-toggle"></i></div><div id="bs10" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">n=24 | 1200 = P×25/4×6/100 = 6P/4 | (i) P = <b>₹800</b> | (ii) MV = 19200+1200 = <b>₹20,400</b></div><div class="sol-answer">₹800/month | ₹20,400</div></div></div>
+
+<div class="q-card" data-g="b" data-d="medium"><div class="q-header" onclick="tog('bs11','bi11')"><span class="q-num">Q11</span><span class="q-text">Mr. R.K. Nair gets ₹6455 at end of 1 year at 14% p.a. Find monthly instalment.<span class="diff-badge medium">Medium</span></span><i id="bi11" class="ti ti-chevron-down q-toggle"></i></div><div id="bs11" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">n=12 | I=0.91P | 12P+0.91P=6455 | 12.91P=6455 | P = <b>₹500</b></div><div class="sol-answer">₹500/month</div></div></div>
+
+<div class="q-card" data-g="b" data-d="hard"><div class="q-header" onclick="tog('bs12','bi12')"><span class="q-num">Q12</span><span class="q-text">Samita deposits ₹2000/month at 10% p.a. and gets ₹83100. Find total time.<span class="diff-badge hard">Hard</span></span><i id="bi12" class="ti ti-chevron-down q-toggle"></i></div><div id="bs12" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">2000n + 100n(n+1)/12 = 83100 | n²+241n−9972=0 | (n−36)(n+277)=0 | n = <b>36 months = 3 years</b></div><div class="sol-answer">3 years</div></div></div>
+
+    </div>
+  </div>
+  <div id="c2tips" class="section">
+    <div class="card">
+      <div class="card-title">Banking Exam Tips</div>
+      <div class="tip">⚠️ Always convert years to months before solving.</div>
+      <div class="tip">⚠️ Interest is on EFFECTIVE principal = P×n(n+1)/2, not total deposited.</div>
+      <div class="tip">✅ MV = Total Deposited + Interest = P×n + I.</div>
+      <div class="tip">✅ To find period: form quadratic, reject negative root.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CH3: SHARES & DIVIDEND — ALL 32 ============ -->
+<div id="ch3" class="chapter">
+  <div id="c3home" class="section active">
+    <div class="ch-badge">Chapter 3 — Shares &amp; Dividend</div>
+    <div class="grid2">
+      <div class="stat"><div class="n">32</div><div class="l">Questions</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Solutions</div></div>
+      <div class="stat"><div class="n">FV</div><div class="l">Face Value</div></div>
+      <div class="stat"><div class="n">MV</div><div class="l">Market Value</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Key Formulas</div>
+      <div class="formula-box"><div class="label">Dividend</div><div class="formula">= (Total FV × Rate%) ÷ 100</div></div>
+      <div class="formula-box"><div class="label">Return % on Investment</div><div class="formula">= (Annual Income ÷ Investment) × 100</div></div>
+      <div class="formula-box"><div class="label">Premium/Discount</div><div class="formula">MV = FV ± Premium/Discount</div></div>
+    </div>
+  </div>
+  <div id="c3form" class="section">
+    <div class="card">
+      <div class="card-title">Shares &amp; Dividend Formulas</div>
+      <div class="formula-box"><div class="label">Total Dividend</div><div class="formula">= (Total FV × Rate%) ÷ 100</div></div>
+      <div class="formula-box"><div class="label">Number of Shares</div><div class="formula">= Investment ÷ MV per share</div></div>
+      <div class="formula-box"><div class="label">Total Investment</div><div class="formula">= Shares × MV per share</div></div>
+      <div class="formula-box"><div class="label">Total Face Value</div><div class="formula">= Shares × FV per share</div></div>
+      <div class="formula-box"><div class="label">Yield / Return %</div><div class="formula">= (Dividend ÷ Investment) × 100</div></div>
+      <div class="formula-box"><div class="label">FV from dividend</div><div class="formula">= (Dividend × 100) ÷ Rate%</div></div>
+      <div class="formula-box"><div class="label">MV when return % given</div><div class="formula">= (Div per share × 100) ÷ Return%</div></div>
+    </div>
+  </div>
+  <div id="c3q" class="section">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filt('s','all',this)">All (32)</button>
+      <button class="filter-btn" onclick="filt('s','easy',this)">Easy</button>
+      <button class="filter-btn" onclick="filt('s','medium',this)">Medium</button>
+      <button class="filter-btn" onclick="filt('s','hard',this)">Hard</button>
+    </div>
+    <div id="s-list">
+
+<div class="q-card" data-g="s" data-d="easy"><div class="q-header" onclick="tog('ss1','si1')"><span class="q-num">Q1</span><span class="q-text">Find dividend on 80 shares of ₹25 each if 10% dividend is declared.<span class="diff-badge easy">Easy</span></span><i id="si1" class="ti ti-chevron-down q-toggle"></i></div><div id="ss1" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Total FV = 80×25 = ₹2000 | Dividend = 2000×10/100 = <b>₹200</b></div><div class="sol-answer">₹200</div></div></div>
+
+<div class="q-card" data-g="s" data-d="easy"><div class="q-header" onclick="tog('ss2','si2')"><span class="q-num">Q2</span><span class="q-text">Company declares 12% dividend. Man receives ₹4200. Find nominal value of shares.<span class="diff-badge easy">Easy</span></span><i id="si2" class="ti ti-chevron-down q-toggle"></i></div><div id="ss2" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Total FV = (4200×100)÷12 = <b>₹35,000</b></div><div class="sol-answer">₹35,000</div></div></div>
+
+<div class="q-card" data-g="s" data-d="easy"><div class="q-header" onclick="tog('ss3','si3')"><span class="q-num">Q3</span><span class="q-text">Man buys 200 ten-rupee shares at ₹13 each and receives 9% dividend. Find investment and dividend.<span class="diff-badge easy">Easy</span></span><i id="si3" class="ti ti-chevron-down q-toggle"></i></div><div id="ss3" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Investment = 200×13 = <b>₹2600</b> | Total FV=2000 | Dividend = 2000×9/100 = <b>₹180</b></div><div class="sol-answer">₹2600 | ₹180</div></div></div>
+
+<div class="q-card" data-g="s" data-d="easy"><div class="q-header" onclick="tog('ss4','si4')"><span class="q-num">Q4</span><span class="q-text">Find market price of 6% ₹100 share when person gets ₹78 dividend by investing ₹1560.<span class="diff-badge easy">Easy</span></span><i id="si4" class="ti ti-chevron-down q-toggle"></i></div><div id="ss4" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Total FV = (78×100)÷6 = ₹1300 | MV = (1560×100)÷1300 = <b>₹120</b></div><div class="sol-answer">₹120</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss5','si5')"><span class="q-num">Q5</span><span class="q-text">Salman buys 50 shares FV ₹100 at ₹132. (i) Investment? (ii) Annual income at 7.5%? (iii) Extra shares for ₹150 more income?<span class="diff-badge medium">Medium</span></span><i id="si5" class="ti ti-chevron-down q-toggle"></i></div><div id="ss5" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) 50×132 = <b>₹6600</b> | (ii) 7.5×50 = <b>₹375</b> | (iii) Need 525÷7.5=70 shares → extra = <b>20</b></div><div class="sol-answer">₹6600 | ₹375 | 20 extra shares</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss6','si6')"><span class="q-num">Q6</span><span class="q-text">Lady holds 1800 shares ₹100 at 15% dividend. Find annual income. If bought at 40% premium, find % return (nearest integer).<span class="diff-badge medium">Medium</span></span><i id="si6" class="ti ti-chevron-down q-toggle"></i></div><div id="ss6" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Dividend = 15% of 1,80,000 = <b>₹27,000</b> | MV=140 → Inv=2,52,000 | Return = <b>≈11%</b></div><div class="sol-answer">₹27,000 | ≈11%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss7','si7')"><span class="q-num">Q7</span><span class="q-text">Invest in ₹25 shares at ₹36 to earn ₹720 at 12% dividend. Find investment and % return.<span class="diff-badge medium">Medium</span></span><i id="si7" class="ti ti-chevron-down q-toggle"></i></div><div id="ss7" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">FV total=6000 | Shares=240 | Investment = 240×36 = <b>₹8640</b> | Return = <b>8.33%</b></div><div class="sol-answer">₹8640 | 8.33%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss8','si8')"><span class="q-num">Q8</span><span class="q-text">Ashok invests ₹26400 in 12% ₹25 shares, gets ₹2475 dividend. Find (i) shares bought (ii) MV per share.<span class="diff-badge medium">Medium</span></span><i id="si8" class="ti ti-chevron-down q-toggle"></i></div><div id="ss8" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) Shares = (2475×100)÷(12×25) = <b>825</b> | (ii) MV = 26400÷825 = <b>₹32</b></div><div class="sol-answer">825 shares | ₹32</div></div></div>
+
+<div class="q-card" data-g="s" data-d="easy"><div class="q-header" onclick="tog('ss9','si9')"><span class="q-num">Q9</span><span class="q-text">Man invests ₹4500 in 7.5% shares. ₹100 shares at 10% discount. Find (i) shares (ii) annual income.<span class="diff-badge easy">Easy</span></span><i id="si9" class="ti ti-chevron-down q-toggle"></i></div><div id="ss9" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">MV=₹90 | (i) Shares=4500÷90 = <b>50</b> | (ii) Income = 7.5% of 5000 = <b>₹375</b></div><div class="sol-answer">50 shares | ₹375</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss10','si10')"><span class="q-num">Q10</span><span class="q-text">Amit invests ₹36000 in ₹100 shares at ₹20 premium, 15% dividend. Find (i) shares bought (ii) yearly dividend (iii) % return.<span class="diff-badge medium">Medium</span></span><i id="si10" class="ti ti-chevron-down q-toggle"></i></div><div id="ss10" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">MV=120 | (i) 36000÷120 = <b>300 shares</b> | (ii) 15% of 30000 = <b>₹4500</b> | (iii) <b>12.5%</b></div><div class="sol-answer">300 | ₹4500 | 12.5%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss11','si11')"><span class="q-num">Q11</span><span class="q-text">Mr. Tiwari invests ₹29040 in 15% ₹100 shares at 20% premium. Find (i) shares (ii) income (iii) % return.<span class="diff-badge medium">Medium</span></span><i id="si11" class="ti ti-chevron-down q-toggle"></i></div><div id="ss11" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">MV=120 | (i) 29040÷120 = <b>242 shares</b> | (ii) 242×15 = <b>₹3630</b> | (iii) (15÷120)×100 = <b>12.5%</b></div><div class="sol-answer">242 | ₹3630 | 12.5%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="easy"><div class="q-header" onclick="tog('ss12','si12')"><span class="q-num">Q12</span><span class="q-text">Man buys ₹10 par shares at par, 8% dividend, receives ₹300. Find number of shares.<span class="diff-badge easy">Easy</span></span><i id="si12" class="ti ti-chevron-down q-toggle"></i></div><div id="ss12" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Total FV = (300×100)÷8 = ₹3750 | Shares = 3750÷10 = <b>375</b></div><div class="sol-answer">375 shares</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss13','si13')"><span class="q-num">Q13</span><span class="q-text">Man invests ₹8800 in ₹100 shares at 10% premium, earns ₹1200 dividend. Find (i) shares (ii) dividend %.<span class="diff-badge medium">Medium</span></span><i id="si13" class="ti ti-chevron-down q-toggle"></i></div><div id="ss13" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">MV=110 | FV total = (8800×100)÷110 = ₹8000 | (i) 8000÷100 = <b>80 shares</b> | (ii) (1200×100)÷8000 = <b>15%</b></div><div class="sol-answer">80 shares | 15%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="hard"><div class="q-header" onclick="tog('ss14','si14')"><span class="q-num">Q14</span><span class="q-text">Man invests ₹45000 in 15% ₹100 shares at ₹125. Sells to raise ₹8400 when MV=₹140. Find (i) remaining shares (ii) their dividend.<span class="diff-badge hard">Hard</span></span><i id="si14" class="ti ti-chevron-down q-toggle"></i></div><div id="ss14" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Total=360 shares | Sold=8400÷140=60 | (i) Remaining = <b>300</b> | (ii) 15% of 30000 = <b>₹4500</b></div><div class="sol-answer">300 shares | ₹4500</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss15','si15')"><span class="q-num">Q15</span><span class="q-text">Ajay owns 560 shares FV ₹25, 9% dividend. Find (i) dividend (ii) return % if paid ₹30/share.<span class="diff-badge medium">Medium</span></span><i id="si15" class="ti ti-chevron-down q-toggle"></i></div><div id="ss15" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">FV total=14000 | (i) 14000×9/100 = <b>₹1260</b> | Inv=16800 | (ii) (1260÷16800)×100 = <b>7.5%</b></div><div class="sol-answer">₹1260 | 7.5%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss16','si16')"><span class="q-num">Q16</span><span class="q-text">Company 10000 shares ₹100, 8% dividend. (i) Total dividend? (ii) Ramesh 90 shares at ₹150 — dividend and return %?<span class="diff-badge medium">Medium</span></span><i id="si16" class="ti ti-chevron-down q-toggle"></i></div><div id="ss16" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) <b>₹80,000</b> | (ii) Ramesh dividend = 9000×8/100 = <b>₹720</b> | Inv=13500 | Return = <b>5.33%</b></div><div class="sol-answer">₹80,000 | ₹720 | 5.33%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss17','si17')"><span class="q-num">Q17</span><span class="q-text">Company 4000 shares ₹110, 15% dividend. (i) Total dividend? (ii) Shah Rukh 88 shares — income? (iii) If return 10%, find price per share.<span class="diff-badge medium">Medium</span></span><i id="si17" class="ti ti-chevron-down q-toggle"></i></div><div id="ss17" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) 15% of 4,40,000 = <b>₹66,000</b> | (ii) FV=9680 → income = <b>₹1452</b> | (iii) MV = (1452×100)÷(10×88) = <b>₹165</b></div><div class="sol-answer">₹66,000 | ₹1452 | ₹165</div></div></div>
+
+<div class="q-card" data-g="s" data-d="easy"><div class="q-header" onclick="tog('ss18','si18')"><span class="q-num">Q18</span><span class="q-text">Investing ₹7500 in 10% shares gives ₹500 income. Find price per ₹100 share.<span class="diff-badge easy">Easy</span></span><i id="si18" class="ti ti-chevron-down q-toggle"></i></div><div id="ss18" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">FV total = (500×100)÷10 = ₹5000 | MV = (7500×100)÷5000 = <b>₹150</b></div><div class="sol-answer">₹150</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss19','si19')"><span class="q-num">Q19</span><span class="q-text">400 ten-rupee shares at ₹2.50 premium, 8% dividend. Find (i) investment (ii) dividend (iii) yield %.<span class="diff-badge medium">Medium</span></span><i id="si19" class="ti ti-chevron-down q-toggle"></i></div><div id="ss19" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">MV=12.50 | (i) 400×12.50 = <b>₹5000</b> | (ii) 8% of 4000 = <b>₹320</b> | (iii) (320÷5000)×100 = <b>6.4%</b></div><div class="sol-answer">₹5000 | ₹320 | 6.4%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss20','si20')"><span class="q-num">Q20</span><span class="q-text">₹10400 in 6% shares at ₹104 and ₹11440 in 10.4% shares at ₹143. Find total income.<span class="diff-badge medium">Medium</span></span><i id="si20" class="ti ti-chevron-down q-toggle"></i></div><div id="ss20" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Income1 = (10400×6)÷104 = ₹600 | Income2 = (11440×10.4)÷143 = ₹832 | Total = <b>₹1432</b></div><div class="sol-answer">₹1432</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss21','si21')"><span class="q-num">Q21</span><span class="q-text">Two companies: 7% shares at ₹116 and 9% shares at ₹145. Which investment is more profitable?<span class="diff-badge medium">Medium</span></span><i id="si21" class="ti ti-chevron-down q-toggle"></i></div><div id="ss21" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Assume same investment | Income1 = 7×145 = ₹1015 | Income2 = 9×116 = ₹1044 | <b>9% at ₹145 is better</b></div><div class="sol-answer">9% shares at ₹145</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss22','si22')"><span class="q-num">Q22</span><span class="q-text">Which is better: 6% ₹100 shares at ₹120 or 8% ₹10 shares at ₹15?<span class="diff-badge medium">Medium</span></span><i id="si22" class="ti ti-chevron-down q-toggle"></i></div><div id="ss22" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Invest ₹120 | Case1: income=₹6 | Case2: 8 shares → 8×0.8=<b>₹6.4</b> | 8% ₹10 shares are better</div><div class="sol-answer">8% ₹10 shares at ₹15</div></div></div>
+
+<div class="q-card" data-g="s" data-d="hard"><div class="q-header" onclick="tog('ss23','si23')"><span class="q-num">Q23</span><span class="q-text">Man invests ₹10080 in 6% ₹100 shares at ₹112. Shares fall to ₹96, sells and reinvests in 10% ₹10 shares at ₹8. Find change in annual income.<span class="diff-badge hard">Hard</span></span><i id="si23" class="ti ti-chevron-down q-toggle"></i></div><div id="ss23" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Shares=90 | Old income = 90×6 = ₹540 | Proceeds = 90×96 = ₹8640</div><div class="sol-step">New shares = 8640÷8 = 1080 | New income = 10% of 10800 = ₹1080 | Increase = <b>₹540</b></div><div class="sol-answer">Income increases by ₹540</div></div></div>
+
+<div class="q-card" data-g="s" data-d="hard"><div class="q-header" onclick="tog('ss24','si24')"><span class="q-num">Q24</span><span class="q-text">Sachin invests ₹8500 in 10% ₹100 shares at ₹170. Sells when price rises ₹30. Reinvests in 12% ₹100 shares at ₹125. Find (i) sale proceeds (ii) new shares (iii) change in income.<span class="diff-badge hard">Hard</span></span><i id="si24" class="ti ti-chevron-down q-toggle"></i></div><div id="ss24" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Shares=50 | Old income=₹500 | (i) 50×200 = <b>₹10,000</b></div><div class="sol-step">(ii) 10000÷125 = <b>80 shares</b> | (iii) New income=₹960 | Increase = <b>₹460</b></div><div class="sol-answer">₹10,000 | 80 shares | +₹460</div></div></div>
+
+<div class="q-card" data-g="s" data-d="hard"><div class="q-header" onclick="tog('ss25','si25')"><span class="q-num">Q25</span><span class="q-text">Person invests ₹4368 in ₹100 shares at ₹91. Sells FV ₹2400 at MV 95, rest at MV 85. Find gain or loss.<span class="diff-badge hard">Hard</span></span><i id="si25" class="ti ti-chevron-down q-toggle"></i></div><div id="ss25" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Shares=48 | Sale1 = (2400×95)/100 = ₹2280 | Sale2 = (2400×85)/100 = ₹2040</div><div class="sol-step">Total received = ₹4320 | Invested ₹4368 | <b>Loss = ₹48</b></div><div class="sol-answer">Loss = ₹48</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss26','si26')"><span class="q-num">Q26</span><span class="q-text">₹50 shares at ₹80 give 4% return on investment. What % is company paying? Dividend on 200 shares?<span class="diff-badge medium">Medium</span></span><i id="si26" class="ti ti-chevron-down q-toggle"></i></div><div id="ss26" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Income on ₹80 = 80×4/100 = ₹3.20 | Div% = (3.20×100)÷50 = <b>6.4%</b></div><div class="sol-step">Dividend on 200 shares = 6.4% of 10000 = <b>₹640</b></div><div class="sol-answer">6.4% | ₹640</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss27','si27')"><span class="q-num">Q27</span><span class="q-text">₹100 shares sold at ₹20 discount. Return on investment 15%. Find dividend rate declared.<span class="diff-badge medium">Medium</span></span><i id="si27" class="ti ti-chevron-down q-toggle"></i></div><div id="ss27" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">MV=80 | Income = 80×15/100 = ₹12 on FV ₹100 → Rate = <b>12%</b></div><div class="sol-answer">12%</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss28','si28')"><span class="q-num">Q28</span><span class="q-text">Company declared 14% dividend. Find MV of ₹50 shares if return on investment is 10%.<span class="diff-badge medium">Medium</span></span><i id="si28" class="ti ti-chevron-down q-toggle"></i></div><div id="ss28" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Div per share = 14% of 50 = ₹7 | MV = (7×100)÷10 = <b>₹70</b></div><div class="sol-answer">₹70</div></div></div>
+
+<div class="q-card" data-g="s" data-d="medium"><div class="q-header" onclick="tog('ss29','si29')"><span class="q-num">Q29</span><span class="q-text">Company 10000 shares ₹100, 5% dividend. (i) Total dividend? (ii) Income for 72 shares? (iii) If return 4%, find price per share.<span class="diff-badge medium">Medium</span></span><i id="si29" class="ti ti-chevron-down q-toggle"></i></div><div id="ss29" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">(i) 5% of 10,00,000 = <b>₹50,000</b> | (ii) 72×5 = <b>₹360</b> | (iii) MV = (5×100)÷4 = <b>₹125</b></div><div class="sol-answer">₹50,000 | ₹360 | ₹125</div></div></div>
+
+<div class="q-card" data-g="s" data-d="hard"><div class="q-header" onclick="tog('ss30','si30')"><span class="q-num">Q30</span><span class="q-text">Man sold ₹100 shares (10% dividend) at 25% discount, invested in ₹100 shares (16% dividend) at ₹80. Income increased by ₹2000. Find shares sold.<span class="diff-badge hard">Hard</span></span><i id="si30" class="ti ti-chevron-down q-toggle"></i></div><div id="ss30" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Let shares = x | Old income=10x | Proceeds=75x | New shares=75x÷80=15x/16</div><div class="sol-step">New income = (15x/16)×16 = 15x | Increase = 5x = 2000 | x = <b>400</b></div><div class="sol-answer">400 shares</div></div></div>
+
+<div class="q-card" data-g="s" data-d="hard"><div class="q-header" onclick="tog('ss31','si31')"><span class="q-num">Q31</span><span class="q-text">Man invests ₹6750 partly in 6% shares at ₹140 and partly in 5% shares at ₹125. Total income ₹280. Find investment in each.<span class="diff-badge hard">Hard</span></span><i id="si31" class="ti ti-chevron-down q-toggle"></i></div><div id="ss31" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Let first = x | 3x/70 + (6750−x)/25 = 280 | Multiply by 350: 15x+14(6750−x)=98000</div><div class="sol-step">x = 98000−94500 = <b>₹3500</b> | Second = <b>₹3250</b></div><div class="sol-answer">₹3500 | ₹3250</div></div></div>
+
+<div class="q-card" data-g="s" data-d="hard"><div class="q-header" onclick="tog('ss32','si32')"><span class="q-num">Q32</span><span class="q-text">Divide ₹20304: one part in 9% ₹50 shares at 8% premium, other in 8% ₹25 shares at 8% discount. Equal annual incomes. Find each part.<span class="diff-badge hard">Hard</span></span><i id="si32" class="ti ti-chevron-down q-toggle"></i></div><div id="ss32" class="q-solution"><div class="sol-label">Solution</div><div class="sol-step">Let first = x | Income1 = (x×9)÷108 = x/12 | Income2 = (20304−x)×8÷92 = 2(20304−x)/23</div><div class="sol-step">x/12 = 2(20304−x)/23 | 23x = 24(20304−x) | 47x = 24×20304 | x = <b>₹10,368</b></div><div class="sol-step">Second = 20304−10368 = <b>₹9,936</b></div><div class="sol-answer">₹10,368 | ₹9,936</div></div></div>
+
+    </div>
+  </div>
+  <div id="c3tips" class="section">
+    <div class="card">
+      <div class="card-title">Shares &amp; Dividend Exam Tips</div>
+      <div class="tip">⚠️ Dividend is always on Face Value, NEVER on Market Value!</div>
+      <div class="tip">⚠️ Return % is always on Market Value (actual investment).</div>
+      <div class="tip">✅ Comparing investments: use same base investment in both cases.</div>
+      <div class="tip">✅ Change-in-income: calculate old income first, then new income after reinvestment.</div>
+      <div class="tip">✅ Premium → MV = FV + Premium. Discount → MV = FV − Discount.</div>
+      <div class="tip">✅ 4 steps: Find FV total → Dividend → Investment → Return %</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+function showCh(id,btn){
+  document.querySelectorAll('.chapter').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.ch-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('[id^="sub-ch"]').forEach(s=>s.style.display='none');
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  var sub=document.getElementById('sub-'+id);
+  if(sub){sub.style.display='flex';}
+  var num=id.replace('ch','');
+  document.querySelectorAll('#'+id+' .section').forEach(s=>s.classList.remove('active'));
+  var h=document.getElementById('c'+num+'home');
+  if(h)h.classList.add('active');
+  if(sub){sub.querySelectorAll('.sub-btn').forEach(b=>b.classList.remove('active'));var fb=sub.querySelector('.sub-btn');if(fb)fb.classList.add('active');}
+}
+function showSec(chid,secid,btn){
+  document.querySelectorAll('#'+chid+' .section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#sub-'+chid+' .sub-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(secid).classList.add('active');
+  btn.classList.add('active');
+}
+function tog(sid,iid){
+  var s=document.getElementById(sid),ic=document.getElementById(iid);
+  if(!s)return;
+  if(s.classList.contains('open')){s.classList.remove('open');if(ic)ic.style.transform='';}
+  else{s.classList.add('open');if(ic)ic.style.transform='rotate(180deg)';}
+}
+function filt(prefix,diff,btn){
+  var bar=btn.parentElement;
+  bar.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.q-card[data-g="'+prefix+'"]').forEach(c=>{
+    c.style.display=(diff==='all'||c.dataset.d===diff)?'':'none';
+  });
+}
+</script>
